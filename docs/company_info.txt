@@ -1,0 +1,16 @@
+Company Name: XYZ Pizza Enterprise
+
+We sell pizza in 3 sizes: Small, Medium, Large.
+Available flavors: Margherita, Farmhouse, Peppy Paneer, Chicken Supreme.
+
+Maximum pizzas that can be ordered at once: 10.
+
+Delivery time: 30–45 minutes within 5 km radius.
+
+Hiring Process:
+1. Submit application form.
+2. Telephonic interview.
+3. In-store practical test.
+4. Final selection.
+
+We operate from 10 AM to 11 PM daily.

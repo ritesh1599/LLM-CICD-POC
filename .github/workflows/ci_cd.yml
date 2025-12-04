@@ -1,0 +1,45 @@
+name: CI-CD
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Login to ECR
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build and Tag Docker image
+      run: |
+        docker build -t pizza-rag:latest .
+        docker tag pizza-rag:latest ${{ secrets.ECR_REPO }}:latest
+
+    - name: Push image
+      run: |
+        docker push ${{ secrets.ECR_REPO }}:latest
+
+    - name: Deploy to ECS
+      run: |
+        aws ecs update-service \
+          --cluster ${{ secrets.ECS_CLUSTER }} \
+          --service ${{ secrets.ECS_SERVICE }} \
+          --force-new-deployment
